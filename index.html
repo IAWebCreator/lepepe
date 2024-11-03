@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LePepe - Meme Token</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --deep-green: #005f40;
+            --gold: #ffd700;
+            --light-cream: #fff8e7;
+            --dark-brown: #3a3a3a;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-cream);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--deep-green);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--light-cream);
+            text-decoration: none;
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,95,64,0.8), rgba(0,95,64,0.8)), url('./logo.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--light-cream);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--gold);
+            color: var(--deep-green);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--light-cream);
+            color: var(--deep-green);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--deep-green);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-text {
+            flex: 1;
+            padding-right: 50px;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .tokenomics-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tokenomics-list li {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .tokenomics-list li:before {
+            content: '\f0c8';
+            font-family: 'Font Awesome 5 Free';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .how-to-buy-steps {
+            counter-reset: step-counter;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .how-to-buy-steps li {
+            font-size: 18px;
+            margin-bottom: 30px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .how-to-buy-steps li:before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background-color: var(--gold);
+            color: var(--deep-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .roadmap {
+            position: relative;
+        }
+
+        .roadmap:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background-color: var(--gold);
+        }
+
+        .roadmap-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .roadmap-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 45%;
+        }
+
+        .roadmap-item:nth-child(odd) .roadmap-content {
+            margin-left: auto;
+        }
+
+        .roadmap-item:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        footer {
+            background-color: var(--deep-green);
+            color: var(--light-cream);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light-cream);
+            margin: 0 10px;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .roadmap:before {
+                left: 20px;
+            }
+
+            .roadmap-content {
+                width: 80%;
+                margin-left: 40px !important;
+            }
+
+            .roadmap-item:before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">LePepe</a>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#tokenomics">Tokenomics</a></li>
+                    <li><a href="#how-to-buy">How to Buy</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1>LePepe</h1>
+            <p>With a chic beret and a mysterious flair, this mustachioed frog struts the runway like a true sleuth.</p>
+            <a href="#" class="btn">Join the Vogue Revolution</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About LePepe</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>LePepe isn't just your average amphibian. With a dapper mustache and a chic beret perched atop his head, this frog is ready to solve mysteries and turn heads on the runway. Sipping espresso and exuding an air of intrigue, LePepe brings a touch of Parisian charm to the world of meme tokens.</p>
+                    <p>Join us in this stylish adventure where finance meets fashion, and every transaction is as smooth as LePepe's runway walk. It's time to hop into the world of haute couture crypto!</p>
+                </div>
+                <div class="about-image">
+                    <img src="./logo.png" alt="LePepe logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="section">
+        <div class="container">
+            <h2>Tokenomics</h2>
+            <ul class="tokenomics-list">
+                <li>Total Supply: 1,000,000,000 LEPEPE</li>
+                <li>Runway Fund: 30% (For marketing and fashion shows)</li>
+                <li>Mystery Solver Pool: 20% (Community rewards)</li>
+                <li>Beret Staking: 25% (Earn while looking chic)</li>
+                <li>Espresso Liquidity: 25% (Keeping transactions smooth)</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="how-to-buy" class="section">
+        <div class="container">
+            <h2>How to Buy</h2>
+            <ol class="how-to-buy-steps">
+                <li>Get a Wallet - Download a reputable Ethereum wallet like MetaMask or Trust Wallet.</li>
+                <li>Acquire ETH - Purchase Ethereum (ETH) from a cryptocurrency exchange like Coinbase or Binance.</li>
+                <li>Connect to a DEX - Connect your wallet to a decentralized exchange (DEX) like Uniswap or SushiSwap.</li>
+                <li>Swap ETH for LEPEPE - Use the DEX's swap feature to exchange your ETH for LEPEPE.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="roadmap" class="section">
+        <div class="container">
+            <h2>Roadmap</h2>
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Phase 1: The Grand Entrance</h3>
+                        <p>Launch LePepe token and build a community of fashion-forward crypto enthusiasts.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Phase 2: Strutting the Catwalk</h3>
+                        <p>Implement aggressive marketing campaigns and form partnerships with influencers in both crypto and fashion worlds.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Phase 3: The Couture Collection</h3>
+                        <p>Develop unique NFTs and introduce staking mechanisms for LEPEPE holders.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Phase 4: The Fashion Empire</h3>
+                        <p>Explore collaborations with real-world fashion brands and expand LePepe's presence in the metaverse.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div>
+                <span>0x1234...5678</span>
+                <i class="fas fa-copy"></i>
+            </div>
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-chart-line"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fas fa-search-dollar"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Particles.js configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+            },
